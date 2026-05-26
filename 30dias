@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>30 Dias de Flexibilidade — ACT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #f7f6f2; --surface: #ffffff; --surface2: #f0ede8;
+    --text: #1a1a18; --text2: #6b6b66; --text3: #9e9e99;
+    --border: rgba(0,0,0,0.1); --border2: rgba(0,0,0,0.18);
+    --radius-md: 10px; --radius-lg: 16px; --radius-xl: 24px;
+    --teal: #1D9E75; --teal-light: #E1F5EE; --teal-dark: #0F6E56;
+    --green: #639922; --green-light: #EAF3DE; --green-dark: #3B6D11;
+    --purple: #7F77DD; --purple-light: #EEEDFE; --purple-dark: #534AB7;
+    --amber: #EF9F27; --amber-light: #FAEEDA; --amber-dark: #854F0B;
+    --coral: #D85A30; --coral-light: #FAECE7; --coral-dark: #993C1D;
+    --blue: #378ADD; --blue-light: #E6F1FB; --blue-dark: #185FA5;
+  }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+  /* NAV */
+  .site-header {
+    background: var(--surface); border-bottom: 1px solid var(--border);
+    padding: 1.25rem 2rem; display: flex; align-items: center;
+    justify-content: space-between; position: sticky; top: 0; z-index: 50;
+  }
+  .site-logo { font-family: 'DM Serif Display', serif; font-size: 20px; color: var(--text); font-weight: 400; }
+  .site-logo em { color: var(--teal); }
+  .nav-links { display: flex; gap: 6px; }
+  .nav-btn {
+    font-size: 13px; padding: 6px 14px; border-radius: 99px;
+    border: 1px solid var(--border); background: transparent;
+    color: var(--text2); cursor: pointer; font-family: 'DM Sans', sans-serif;
+    transition: all 0.15s;
+  }
+  .nav-btn:hover { background: var(--surface2); color: var(--text); }
+  .nav-btn.active { background: var(--teal-light); border-color: var(--teal); color: var(--teal-dark); font-weight: 500; }
+
+  /* PAGES */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* ===== PAGE: HOME ===== */
+  .hero {
+    max-width: 680px; margin: 3rem auto 2rem; padding: 0 1.5rem; text-align: center;
+  }
+  .hero h1 {
+    font-family: 'DM Serif Display', serif; font-size: clamp(36px, 6vw, 52px);
+    font-weight: 400; line-height: 1.15; margin-bottom: 1rem; color: var(--text);
+  }
+  .hero h1 em { color: var(--teal); font-style: italic; }
+  .hero p { font-size: 16px; color: var(--text2); line-height: 1.7; max-width: 480px; margin: 0 auto 2rem; }
+
+  /* ACT INTRO SECTION (on home page) */
+  .act-section {
+    max-width: 680px; margin: 0 auto 3rem; padding: 0 1.5rem;
+  }
+  .act-section-title {
+    font-family: 'DM Serif Display', serif; font-size: 26px; font-weight: 400;
+    color: var(--text); margin-bottom: 0.75rem;
+  }
+  .act-section-sub { font-size: 15px; color: var(--text2); line-height: 1.75; margin-bottom: 1.5rem; }
+  .act-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius-xl); padding: 1.75rem; margin-bottom: 1rem;
+  }
+  .act-card h3 {
+    font-family: 'DM Serif Display', serif; font-size: 18px; font-weight: 400;
+    color: var(--text); margin-bottom: 0.75rem;
+  }
+  .act-card p { font-size: 14px; color: var(--text2); line-height: 1.8; margin-bottom: 0.75rem; }
+  .act-card p:last-of-type { margin-bottom: 0; }
+  .hexaflex {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 1.25rem;
+  }
+  .hex-item {
+    border-radius: var(--radius-md); padding: 12px; font-size: 12px;
+    font-weight: 500; line-height: 1.4;
+  }
+  .hex-item span { display: block; font-size: 11px; font-weight: 400; margin-top: 3px; opacity: 0.85; }
+  .act-quote {
+    border-left: 3px solid var(--teal); padding: 12px 16px;
+    background: var(--teal-light); border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    font-size: 14px; font-style: italic; color: var(--teal-dark); line-height: 1.7;
+    margin-top: 1rem;
+  }
+  .btn-go-jogo {
+    display: block; width: 100%; padding: 15px; border-radius: var(--radius-lg);
+    border: none; cursor: pointer; font-size: 15px; font-weight: 500; color: white;
+    font-family: 'DM Sans', sans-serif; background: var(--teal);
+    transition: background 0.15s, transform 0.1s; margin-top: 1.5rem; text-align: center;
+  }
+  .btn-go-jogo:hover { background: var(--teal-dark); }
+  .btn-go-jogo:active { transform: scale(0.99); }
+
+  /* ===== PAGE: JOGO ===== */
+  .stats-row {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+    max-width: 680px; margin: 2rem auto 1.5rem; padding: 0 1.5rem;
+  }
+  .stat-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); padding: 1rem; text-align: center;
+  }
+  .stat-card .num { font-size: 26px; font-weight: 500; color: var(--text); line-height: 1; margin-bottom: 4px; }
+  .stat-card .label { font-size: 12px; color: var(--text2); }
+  .progress-wrap { max-width: 680px; margin: 0 auto 2rem; padding: 0 1.5rem; }
+  .progress-label { display: flex; justify-content: space-between; font-size: 13px; color: var(--text2); margin-bottom: 8px; }
+  .progress-bar { height: 8px; background: var(--surface2); border-radius: 99px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--teal), var(--green)); border-radius: 99px; transition: width 0.6s cubic-bezier(.4,0,.2,1); }
+  .badges-wrap { max-width: 680px; margin: 0 auto 2.5rem; padding: 0 1.5rem; }
+  .badges-title { font-size: 12px; font-weight: 500; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px; }
+  .badges-row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .badge { font-size: 12px; padding: 5px 14px; border-radius: 99px; border: 1px solid var(--border); color: var(--text3); background: var(--surface); transition: all 0.3s; }
+  .badge.earned { background: var(--amber-light); border-color: var(--amber); color: var(--amber-dark); font-weight: 500; }
+  .weeks-container { max-width: 680px; margin: 0 auto; padding: 0 1.5rem 4rem; display: flex; flex-direction: column; gap: 2rem; }
+  .week-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+  .week-pill { font-size: 11px; font-weight: 500; padding: 4px 12px; border-radius: 99px; white-space: nowrap; }
+  .week-title { font-size: 15px; font-weight: 500; color: var(--text); }
+  .week-sub { font-size: 13px; color: var(--text2); }
+  .days-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; }
+  .day-btn {
+    aspect-ratio: 1; border-radius: var(--radius-md); border: 1px solid var(--border);
+    background: var(--surface); cursor: pointer; font-size: 13px; font-weight: 500;
+    color: var(--text2); transition: all 0.18s; display: flex; align-items: center;
+    justify-content: center; flex-direction: column; gap: 2px; font-family: 'DM Sans', sans-serif;
+  }
+  .day-btn:hover:not(.locked) { border-color: var(--border2); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+  .day-btn.completed { color: white; border-color: transparent; }
+  .day-btn.active { border-width: 2px; font-weight: 500; }
+  .day-btn.locked { opacity: 0.3; cursor: default; }
+  .day-btn.week-1.completed { background: var(--teal); }
+  .day-btn.week-1.active { border-color: var(--teal); color: var(--teal-dark); background: var(--teal-light); }
+  .day-btn.week-2.completed { background: var(--green); }
+  .day-btn.week-2.active { border-color: var(--green); color: var(--green-dark); background: var(--green-light); }
+  .day-btn.week-3.completed { background: var(--purple); }
+  .day-btn.week-3.active { border-color: var(--purple); color: var(--purple-dark); background: var(--purple-light); }
+  .day-btn.week-4.completed { background: var(--amber); }
+  .day-btn.week-4.active { border-color: var(--amber); color: var(--amber-dark); background: var(--amber-light); }
+  .day-btn.week-5.completed { background: var(--coral); }
+  .day-btn.week-5.active { border-color: var(--coral); color: var(--coral-dark); background: var(--coral-light); }
+  .day-btn.week-6.completed { background: var(--blue); }
+  .day-btn.week-6.active { border-color: var(--blue); color: var(--blue-dark); background: var(--blue-light); }
+  .check-icon { font-size: 16px; }
+
+  /* ===== PAGE: PERFIL ===== */
+  .perfil-wrap { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+  .perfil-hero { text-align: center; margin-bottom: 2.5rem; }
+  .perfil-hero h2 { font-family: 'DM Serif Display', serif; font-size: 30px; font-weight: 400; color: var(--text); margin-bottom: 0.5rem; }
+  .perfil-hero p { font-size: 15px; color: var(--text2); line-height: 1.6; }
+
+  .radar-wrap {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius-xl); padding: 2rem; margin-bottom: 1.5rem;
+    display: flex; flex-direction: column; align-items: center;
+  }
+  .radar-title { font-size: 13px; font-weight: 500; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1.5rem; }
+  canvas#radarChart { max-width: 320px; width: 100%; }
+
+  .processos-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 1.5rem; }
+  .processo-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); padding: 1rem;
+  }
+  .processo-card .p-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+  .processo-card .p-name { font-size: 13px; font-weight: 500; color: var(--text); }
+  .processo-card .p-pct { font-size: 13px; font-weight: 500; }
+  .processo-card .p-bar { height: 6px; background: var(--surface2); border-radius: 99px; overflow: hidden; }
+  .processo-card .p-fill { height: 100%; border-radius: 99px; transition: width 0.8s cubic-bezier(.4,0,.2,1); }
+  .processo-card .p-sub { font-size: 11px; color: var(--text3); margin-top: 6px; }
+
+  .insight-box {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius-xl); padding: 1.5rem; margin-bottom: 1rem;
+  }
+  .insight-box h3 { font-family: 'DM Serif Display', serif; font-size: 18px; font-weight: 400; color: var(--text); margin-bottom: 1rem; }
+  .insight-item { display: flex; gap: 10px; margin-bottom: 10px; align-items: flex-start; }
+  .insight-item:last-child { margin-bottom: 0; }
+  .insight-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 6px; }
+  .insight-text { font-size: 14px; color: var(--text2); line-height: 1.6; }
+
+  .perfil-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 1.5rem; }
+
+  /* MODAL */
+  .modal-bg {
+    position: fixed; inset: 0; background: rgba(10,10,8,0.5);
+    backdrop-filter: blur(4px); display: flex; align-items: center;
+    justify-content: center; z-index: 200; padding: 1rem;
+    opacity: 0; pointer-events: none; transition: opacity 0.2s;
+  }
+  .modal-bg.visible { opacity: 1; pointer-events: all; }
+  .modal {
+    background: var(--surface); border-radius: var(--radius-xl); border: 1px solid var(--border);
+    max-width: 460px; width: 100%; padding: 2rem; max-height: 90vh; overflow-y: auto;
+    transform: translateY(16px); transition: transform 0.25s cubic-bezier(.4,0,.2,1);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  }
+  .modal-bg.visible .modal { transform: translateY(0); }
+  .modal-tag { font-size: 11px; font-weight: 500; padding: 4px 12px; border-radius: 99px; display: inline-block; margin-bottom: 12px; }
+  .modal-day-num { font-size: 12px; color: var(--text3); margin-bottom: 6px; }
+  .modal h2 { font-family: 'DM Serif Display', serif; font-size: 22px; font-weight: 400; margin-bottom: 1.5rem; color: var(--text); line-height: 1.3; }
+  .modal-section { margin-bottom: 1.25rem; }
+  .modal-section > label { font-size: 11px; font-weight: 500; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; display: block; margin-bottom: 6px; }
+  .modal-section p { font-size: 14px; color: var(--text); line-height: 1.7; }
+  .scenario-box { background: var(--bg); border-radius: var(--radius-md); padding: 12px 16px; font-size: 14px; font-style: italic; color: var(--text2); line-height: 1.6; border: 1px solid var(--border); }
+  .mission-box { border-left: 3px solid var(--teal); padding: 10px 14px; font-size: 14px; color: var(--text); line-height: 1.7; background: var(--teal-light); border-radius: 0 var(--radius-md) var(--radius-md) 0; }
+  .reflect-area { width: 100%; border: 1px solid var(--border2); border-radius: var(--radius-md); padding: 12px; font-size: 14px; font-family: 'DM Sans', sans-serif; color: var(--text); background: var(--surface); resize: vertical; min-height: 90px; line-height: 1.6; outline: none; transition: border-color 0.15s; }
+  .reflect-area:focus { border-color: var(--teal); }
+  .modal-actions { display: flex; gap: 10px; margin-top: 1.5rem; }
+  .btn-close { flex: 1; padding: 12px; border-radius: var(--radius-md); border: 1px solid var(--border2); background: transparent; cursor: pointer; font-size: 14px; color: var(--text2); font-family: 'DM Sans', sans-serif; transition: background 0.15s; }
+  .btn-close:hover { background: var(--surface2); }
+  .btn-complete { flex: 2; padding: 12px; border-radius: var(--radius-md); border: none; cursor: pointer; font-size: 14px; font-weight: 500; color: white; font-family: 'DM Sans', sans-serif; background: var(--teal); transition: background 0.15s, transform 0.1s; }
+  .btn-complete:hover:not(:disabled) { background: var(--teal-dark); }
+  .btn-complete:active:not(:disabled) { transform: scale(0.98); }
+  .btn-complete:disabled { background: var(--surface2); color: var(--text3); cursor: default; }
+
+  /* WELCOME */
+  .welcome-screen {
+    position: fixed; inset: 0; background: var(--bg); z-index: 300;
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; padding: 2rem; overflow-y: auto;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .welcome-screen.hiding { opacity: 0; transform: translateY(-20px); pointer-events: none; }
+  .welcome-screen.hidden { display: none; }
+  .welcome-inner { max-width: 560px; width: 100%; padding: 2rem 0; }
+  .welcome-eyebrow { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal); margin-bottom: 1rem; }
+  .welcome-inner h1 { font-family: 'DM Serif Display', serif; font-size: clamp(38px, 7vw, 56px); font-weight: 400; line-height: 1.1; color: var(--text); margin-bottom: 1.25rem; }
+  .welcome-inner h1 em { color: var(--teal); font-style: italic; }
+  .welcome-intro { font-size: 16px; color: var(--text2); line-height: 1.75; margin-bottom: 2rem; }
+  .welcome-act-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-xl); padding: 1.75rem; margin-bottom: 2rem; }
+  .welcome-act-card h2 { font-family: 'DM Serif Display', serif; font-size: 20px; font-weight: 400; color: var(--text); margin-bottom: 0.75rem; }
+  .welcome-act-card p { font-size: 14px; color: var(--text2); line-height: 1.8; margin-bottom: 0.85rem; }
+  .welcome-act-card p:last-of-type { margin-bottom: 0; }
+  .welcome-cta { width: 100%; padding: 16px; border-radius: var(--radius-lg); border: none; cursor: pointer; font-size: 16px; font-weight: 500; color: white; font-family: 'DM Sans', sans-serif; background: var(--teal); transition: background 0.15s, transform 0.1s; }
+  .welcome-cta:hover { background: var(--teal-dark); }
+  .welcome-cta:active { transform: scale(0.99); }
+  .welcome-note { text-align: center; font-size: 12px; color: var(--text3); margin-top: 12px; }
+
+  /* FOOTER */
+  footer { text-align: center; padding: 2rem 1rem; font-size: 12px; color: var(--text3); border-top: 1px solid var(--border); }
+
+  @media (max-width: 520px) {
+    .days-grid { grid-template-columns: repeat(5, 1fr); }
+    .stats-row, .perfil-stats { grid-template-columns: repeat(3, 1fr); }
+    .processos-grid { grid-template-columns: 1fr; }
+    .hexaflex { grid-template-columns: repeat(2, 1fr); }
+    .site-header { padding: 1rem; }
+    .nav-btn span { display: none; }
+    .modal { padding: 1.5rem; border-radius: var(--radius-lg); }
+  }
+</style>
+</head>
+<body>
+
+<!-- WELCOME SCREEN -->
+<div class="welcome-screen" id="welcome-screen">
+  <div class="welcome-inner">
+    <div class="welcome-eyebrow">Terapia de Aceitação e Compromisso</div>
+    <h1>30 Dias de<br><em>Flexibilidade</em></h1>
+    <p class="welcome-intro">Uma jornada prática pelos seis processos da ACT — uma abordagem da psicologia que nos ensina a viver com mais presença, autenticidade e propósito.</p>
+    <div class="welcome-act-card">
+      <h2>O que é a ACT?</h2>
+      <p>A <strong>Terapia de Aceitação e Compromisso</strong> (ACT, pronuncia-se "act") é uma abordagem da psicologia comportamental moderna desenvolvida pelo psicólogo Steven Hayes. Em vez de tentar eliminar ou controlar pensamentos e emoções difíceis, a ACT propõe algo diferente: aprender a se relacionar com eles de forma aberta — sem luta — enquanto age em direção ao que realmente importa para você.</p>
+      <p>Seu objetivo central é desenvolver <strong>flexibilidade psicológica</strong>: a capacidade de estar presente, aberta à experiência e comprometida com uma vida com sentido — mesmo diante do desconforto inevitável de ser humano.</p>
+      <p>Ao longo de 30 dias, você vai praticar os seis processos que formam esse caminho. Cada dia é uma missão pequena e concreta — nada de teoria pesada, tudo de prática real.</p>
+      <div class="hexaflex" style="margin-top:1.25rem;">
+        <div class="hex-item" style="background:#E1F5EE;color:#0F6E56;">Aceitação<span>Abrir espaço para o que é</span></div>
+        <div class="hex-item" style="background:#EAF3DE;color:#3B6D11;">Desfusão cognitiva<span>Distância dos pensamentos</span></div>
+        <div class="hex-item" style="background:#EEEDFE;color:#534AB7;">Self contextual<span>O "eu" que observa</span></div>
+        <div class="hex-item" style="background:#FAEEDA;color:#854F0B;">Clareza de valores<span>O que importa pra mim</span></div>
+        <div class="hex-item" style="background:#FAECE7;color:#993C1D;">Ação comprometida<span>Agir com propósito</span></div>
+        <div class="hex-item" style="background:#E6F1FB;color:#185FA5;">Atenção flexível<span>Presença no agora</span></div>
+      </div>
+    </div>
+    <button class="welcome-cta" id="btn-start">Começar minha jornada →</button>
+    <p class="welcome-note">Seu progresso é salvo automaticamente neste dispositivo.</p>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="site-logo">30 dias de <em>flexibilidade</em></div>
+  <nav class="nav-links">
+    <button class="nav-btn active" data-page="home" onclick="goPage('home')"><span>Início</span> 🏠</button>
+    <button class="nav-btn" data-page="jogo" onclick="goPage('jogo')"><span>Jogo</span> 🎮</button>
+    <button class="nav-btn" data-page="perfil" onclick="goPage('perfil')"><span>Perfil</span> 🌿</button>
+  </nav>
+</header>
+
+<!-- ===== PAGE: HOME ===== -->
+<div class="page active" id="page-home">
+  <section class="hero">
+    <h1>Uma jornada pelos seis<br>processos da <em>ACT</em></h1>
+    <p>30 dias de missões práticas para desenvolver flexibilidade psicológica — um músculo que se treina com prática diária, pequena e consistente.</p>
+  </section>
+
+  <section class="act-section">
+    <h2 class="act-section-title">O que é a ACT?</h2>
+    <p class="act-section-sub">A Terapia de Aceitação e Compromisso é uma das abordagens mais estudadas da psicologia contemporânea. Em vez de lutar contra o sofrimento, ela propõe uma nova relação com ele.</p>
+
+    <div class="act-card">
+      <h3>A proposta central</h3>
+      <p>Desenvolvida pelo psicólogo Steven Hayes na década de 1980, a ACT parte de uma premissa simples: <strong>o sofrimento humano não vem apenas da dor em si, mas da nossa relação com ela.</strong> Quando lutamos contra pensamentos difíceis, tentamos suprimir emoções ou evitamos situações que nos causam desconforto, acabamos pagando um preço alto — ficamos presos, nossa vida encolhe.</p>
+      <p>A ACT propõe o caminho oposto: aprender a abrir espaço para experiências internas difíceis, sem deixar que elas ditem nossas ações. Isso libera energia para o que realmente importa: agir de acordo com seus valores.</p>
+      <div class="act-quote">"A ACT não pergunta 'como me livro disso?' — ela pergunta 'o que faço com isso enquanto construo a vida que quero?'"</div>
+    </div>
+
+    <div class="act-card">
+      <h3>Os seis processos</h3>
+      <p>A flexibilidade psicológica se desenvolve através de seis processos interligados — o Hexaflex da ACT. Cada semana deste jogo foca em um deles:</p>
+      <div class="hexaflex">
+        <div class="hex-item" style="background:#E1F5EE;color:#0F6E56;">
+          Aceitação
+          <span>Acolher emoções e sensações sem tentar eliminá-las ou suprimi-las</span>
+        </div>
+        <div class="hex-item" style="background:#EAF3DE;color:#3B6D11;">
+          Desfusão cognitiva
+          <span>Criar distância dos pensamentos — você os observa, não é eles</span>
+        </div>
+        <div class="hex-item" style="background:#EEEDFE;color:#534AB7;">
+          Self contextual
+          <span>Descobrir o "eu" observador, estável além de papéis e emoções</span>
+        </div>
+        <div class="hex-item" style="background:#FAEEDA;color:#854F0B;">
+          Clareza de valores
+          <span>Identificar o que dá sentido à sua vida — não metas, mas direções</span>
+        </div>
+        <div class="hex-item" style="background:#FAECE7;color:#993C1D;">
+          Ação comprometida
+          <span>Agir em direção a valores, mesmo diante do desconforto</span>
+        </div>
+        <div class="hex-item" style="background:#E6F1FB;color:#185FA5;">
+          Atenção flexível
+          <span>Estar presente agora — nem preso no passado, nem perdido no futuro</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="act-card">
+      <h3>Como este jogo funciona</h3>
+      <p>Cada dia você recebe uma <strong>situação-gatilho</strong> — um cenário realista do cotidiano —, uma <strong>missão prática</strong> pequena e concreta, e uma <strong>pergunta de reflexão</strong> para registrar o que percebeu. Ao final, um conceito da ACT explica o processo em jogo.</p>
+      <p>Não é preciso "acertar". Não existe resposta certa. O que importa é a prática — repetida, honesta e curiosa. Cada dia concluído fortalece sua flexibilidade psicológica.</p>
+    </div>
+
+    <button class="btn-go-jogo" onclick="goPage('jogo')">Ir para o jogo →</button>
+  </section>
+</div>
+
+<!-- ===== PAGE: JOGO ===== -->
+<div class="page" id="page-jogo">
+  <div class="stats-row">
+    <div class="stat-card"><div class="num" id="stat-done">0</div><div class="label">dias concluídos</div></div>
+    <div class="stat-card"><div class="num" id="stat-pts">0</div><div class="label">pontos</div></div>
+    <div class="stat-card"><div class="num" id="stat-streak">0</div><div class="label">dias seguidos</div></div>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-label"><span>Progresso geral</span><span id="progress-pct">0 / 30</span></div>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+  </div>
+  <div class="badges-wrap">
+    <div class="badges-title">Conquistas</div>
+    <div class="badges-row">
+      <div class="badge" id="badge-7">🌱 Semana consistente</div>
+      <div class="badge" id="badge-14">🌿 Duas semanas</div>
+      <div class="badge" id="badge-30">🌳 Mente flexível</div>
+    </div>
+  </div>
+  <div class="weeks-container" id="weeks-container"></div>
+</div>
+
+<!-- ===== PAGE: PERFIL ===== -->
+<div class="page" id="page-perfil">
+  <div class="perfil-wrap">
+    <div class="perfil-hero">
+      <h2>Meu mapa de <em style="color:var(--teal);font-style:italic;">flexibilidade</em></h2>
+      <p>Veja como está seu desenvolvimento em cada processo da ACT ao longo da jornada.</p>
+    </div>
+
+    <div class="perfil-stats">
+      <div class="stat-card"><div class="num" id="p-stat-done">0</div><div class="label">dias concluídos</div></div>
+      <div class="stat-card"><div class="num" id="p-stat-pts">0</div><div class="label">pontos totais</div></div>
+      <div class="stat-card"><div class="num" id="p-stat-streak">0</div><div class="label">maior sequência</div></div>
+    </div>
+
+    <div class="radar-wrap">
+      <div class="radar-title">Radar de flexibilidade psicológica</div>
+      <canvas id="radarChart" width="320" height="320"></canvas>
+    </div>
+
+    <div class="processos-grid" id="processos-grid"></div>
+
+    <div class="insight-box" id="insight-box">
+      <h3>Suas percepções</h3>
+      <div id="insights-list"></div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-bg" id="modal-bg">
+  <div class="modal">
+    <div class="modal-tag" id="modal-tag"></div>
+    <div class="modal-day-num" id="modal-day-num"></div>
+    <h2 id="modal-title"></h2>
+    <div class="modal-section">
+      <label>Situação</label>
+      <div class="scenario-box" id="modal-scenario"></div>
+    </div>
+    <div class="modal-section">
+      <label>Missão do dia</label>
+      <div class="mission-box" id="modal-mission"></div>
+    </div>
+    <div class="modal-section">
+      <label>Conceito ACT</label>
+      <p id="modal-concept"></p>
+    </div>
+    <div class="modal-section">
+      <label>Reflexão — escreva aqui</label>
+      <textarea class="reflect-area" id="modal-reflect" placeholder="O que você percebeu hoje?"></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-close" id="btn-close">Fechar</button>
+      <button class="btn-complete" id="btn-complete">Concluir dia ✓</button>
+    </div>
+  </div>
+</div>
+
+<footer>Desenvolvido com base na Terapia de Aceitação e Compromisso (ACT) · Projeto acadêmico</footer>
+
+<script>
+const weeks = [
+  { id:1, label:"Semana 1", title:"Abrindo espaço", sub:"Aceitação + Atenção flexível",
+    pill:{bg:"#E1F5EE",color:"#0F6E56"}, processo:"Aceitação & Atenção flexível", cor:"#1D9E75",
+    days:[
+      {title:"Bem-vindo ao presente",scenario:"Você acorda com aquela sensação de peso no peito sem saber bem por quê.",mission:"Hoje, ao perceber qualquer desconforto, não tente afastá-lo. Apenas nomeie em silêncio: 'Isso é ansiedade. Posso sentir isso.'",concept:"Aceitação não é resignação. É parar de gastar energia brigando com o que já está aqui. O primeiro passo é apenas notar."},
+      {title:"O corpo fala",scenario:"Uma reunião difícil está se aproximando e a tensão já aparece no seu corpo.",mission:"Antes da situação desafiadora, faça uma varredura corporal de 3 minutos: onde está a tensão? Observe sem tentar mudar.",concept:"Atenção flexível começa com o corpo. Quando aprendemos a notar sensações sem julgamento, criamos espaço entre estímulo e resposta."},
+      {title:"Emoção como convidada",scenario:"Uma emoção desconfortável surge no meio do dia — irritação, tristeza ou ansiedade.",mission:"Imagine que a emoção é uma visita inesperada. Diga mentalmente: 'Olá, irritação. Posso te acomodar por um momento.'",concept:"ACT propõe que emoções difíceis não são inimigos — são informação. Quando paramos de lutar, elas perdem o poder de nos paralisar."},
+      {title:"Cinco sentidos agora",scenario:"Você está em piloto automático, a cabeça cheia de pensamentos sobre o futuro.",mission:"Pause por 2 minutos. Liste: 5 coisas que vê, 4 que ouve, 3 que toca, 2 que cheira, 1 que saboreia.",concept:"Atenção flexível significa poder direcionar o foco intencionalmente. Este exercício ancora no presente sem esforço de esvaziar a mente."},
+      {title:"Resistência x sofrimento",scenario:"Algo que você não quer sentir insiste em aparecer.",mission:"Quando a emoção surgir, anote: 'O que estou sentindo?' e 'O quanto estou resistindo a isso?' Observe a diferença.",concept:"Na ACT, sofrimento = dor × resistência. Quando aceitamos a dor em vez de resistir, o sofrimento diminui — mesmo que a dor permaneça."},
+      {title:"Respiração âncora",scenario:"Um dia agitado, pensamentos acelerados, sensação de estar fora de controle.",mission:"Três vezes hoje, pare e faça 4 respirações lentas. Apenas observe o ar entrando e saindo. Nada mais.",concept:"A respiração é uma âncora no presente porque sempre acontece agora. É uma forma simples de atenção flexível."},
+      {title:"Revisão da semana 1",scenario:"A primeira semana chegou ao fim.",mission:"Revise mentalmente os 6 dias: qual momento foi mais difícil? Qual prática te surpreendeu? Escreva na reflexão.",concept:"Integrar aprendizados consolida a prática. A ACT não é teoria — é um conjunto de habilidades que se constroem com uso repetido."}
+    ]
+  },
+  { id:2, label:"Semana 2", title:"Distância dos pensamentos", sub:"Desfusão cognitiva",
+    pill:{bg:"#EAF3DE",color:"#3B6D11"}, processo:"Desfusão cognitiva", cor:"#639922",
+    days:[
+      {title:"Você não é seus pensamentos",scenario:"Um pensamento crítico sobre você mesmo aparece repetidamente.",mission:"Quando o pensamento surgir, diga em voz alta: 'Estou tendo o pensamento de que…' Observe a diferença.",concept:"Desfusão cognitiva é criar distância entre você e seus pensamentos. O pensamento continua existindo — mas você deixa de ser ele."},
+      {title:"Pensamentos em nuvens",scenario:"A mente está acelerada, cheia de julgamentos e preocupações.",mission:"Visualize cada pensamento como uma nuvem passando pelo céu. Você é o céu — os pensamentos passam por você, não são você.",concept:"Metáforas de desfusão ajudam o cérebro a criar nova relação com o conteúdo mental. O observador e o observado se separam."},
+      {title:"Obrigado, mente",scenario:"A mente oferece um catálogo de catástrofes sobre o futuro.",mission:"Quando um pensamento alarmante surgir, responda com gentileza: 'Obrigado, mente. Já ouvi.' Depois volte ao que estava fazendo.",concept:"Agradecer à mente reconhece sua tentativa de proteger você — sem se fundir com o que ela diz. É desfusão com humor."},
+      {title:"O rádio barulhento",scenario:"Aquela voz interna crítica começa mais cedo do que o normal.",mission:"Imagine a voz crítica como um programa de rádio tocando ao fundo. Você pode deixá-lo ligar sem ouvir cada palavra.",concept:"A mente produz pensamentos automaticamente, como um rádio. Desfusão é perceber que você não precisa acreditar em tudo que ouve."},
+      {title:"História vs. fato",scenario:"Um pensamento recorrente te convence de algo negativo sobre você.",mission:"Identifique o pensamento e pergunte: 'Isso é um fato ou uma história que conto a mim mesmo?' Escreva as evidências reais.",concept:"A mente confunde narrativas com verdades. Desfusão é questionar: isso é observado ou interpretado?"},
+      {title:"Voz em câmera lenta",scenario:"Um pensamento acelerado parece urgente e ameaçador.",mission:"Repita o pensamento em câmera lenta, com voz de personagem de desenho animado. Note como isso muda sua relação com ele.",concept:"Alterar o contexto de um pensamento (velocidade, voz, forma) ajuda a ver que ele é apenas linguagem — não realidade."},
+      {title:"Revisão da semana 2",scenario:"Duas semanas de prática.",mission:"Qual pensamento você conseguiu observar com mais distância essa semana? O que ainda parece difícil de 'desfundir'?",concept:"A desfusão não elimina pensamentos difíceis — muda nossa relação com eles. Com prática, o espaço entre pensamento e ação cresce."}
+    ]
+  },
+  { id:3, label:"Semana 3", title:"Quem sou além disso", sub:"Self contextual",
+    pill:{bg:"#EEEDFE",color:"#534AB7"}, processo:"Self contextual", cor:"#7F77DD",
+    days:[
+      {title:"O observador silencioso",scenario:"Você se pega completamente absorto em um papel que desempenha — profissional, pai, filho.",mission:"Escreva 5 papéis que você ocupa. Depois pergunte: quem é o 'eu' que observa todos esses papéis?",concept:"O self contextual é o observador — constante, estável, que não muda mesmo quando emoções, pensamentos e papéis mudam."},
+      {title:"Eu aos 10 anos",scenario:"Uma situação atual te faz sentir pequeno ou inadequado.",mission:"Imagine você aos 10 anos de idade. Esse 'você' ainda existe. O que ele diria sobre quem você se tornou?",concept:"A perspectiva do self contextual permite ver a continuidade de quem somos — além dos rótulos e histórias do presente."},
+      {title:"Eu sou vs. Estou sentindo",scenario:"Uma emoção intensa parece definir quem você é.",mission:"Substitua 'Eu sou ansioso' por 'Estou sentindo ansiedade agora.' Pratique isso com qualquer estado mental do dia.",concept:"Pequenas mudanças de linguagem criam distância entre identidade e estado emocional — o coração do self contextual."},
+      {title:"A câmera de cima",scenario:"Um conflito interpessoal parece enorme e impossível.",mission:"Imagine uma câmera filmando a cena de cima. O que ela vê? Quem são as pessoas? O que cada uma precisa?",concept:"O self contextual permite perspectiva ampliada — ver além do próprio ponto de vista sem invalidá-lo."},
+      {title:"Eu daqui a 5 anos",scenario:"Uma decisão difícil parece paralisante hoje.",mission:"Imagine o 'você' de 5 anos no futuro olhando para este momento. O que ele sabe que você ainda não sabe?",concept:"Perspectiva temporal é uma ferramenta do self contextual. O sofrimento de hoje é um ponto numa história maior."},
+      {title:"Sem rótulos por um dia",scenario:"Os rótulos que você carrega ('tímido', 'ansioso', 'fracassado') pesam.",mission:"Hoje, ao se apresentar ou se descrever, tente não usar adjetivos fixos. Descreva ações e valores, não traços.",concept:"Rótulos criam fusão de identidade. O self contextual vive além dos rótulos — é o 'eu' que os carrega, não os rótulos em si."},
+      {title:"Revisão da semana 3",scenario:"Três semanas de jornada.",mission:"Quem você é além dos seus pensamentos, emoções e papéis? Escreva uma frase que tente capturar isso.",concept:"O self contextual não é um conceito intelectual — é uma experiência. Praticar essa perspectiva expande a liberdade psicológica."}
+    ]
+  },
+  { id:4, label:"Semana 4", title:"O que importa para mim", sub:"Clareza de valores",
+    pill:{bg:"#FAEEDA",color:"#854F0B"}, processo:"Clareza de valores", cor:"#EF9F27",
+    days:[
+      {title:"O que me move?",scenario:"O dia a dia parece automatizado, sem sentido de direção.",mission:"Complete: 'No fundo, o que mais importa pra mim é… porque…' Escreva sem censurar. Pode ser várias coisas.",concept:"Valores na ACT não são metas — são direções. Não se alcançam, se vivem. São a bússola, não o destino."},
+      {title:"Valores vs. regras",scenario:"Você age de certo modo porque 'é assim que se faz'.",mission:"Identifique uma ação que você faz por obrigação. Pergunte: se eu escolhesse isso livremente, seria algo que valorizo?",concept:"Valores genuínos nascem de dentro. Regras vêm de fora. A diferença muda completamente a qualidade da ação."},
+      {title:"Quando me sinto vivo",scenario:"Você tenta lembrar quando sentiu que estava realmente no lugar certo.",mission:"Pense em 3 momentos em que se sentiu mais vivo ou mais 'você mesmo'. O que eles têm em comum?",concept:"Esses momentos são pistas sobre seus valores centrais. A ACT usa o passado não para ficar preso nele, mas para se orientar."},
+      {title:"O que eu ensinaria",scenario:"Você pensa em alguém que admira — ou em alguém que você quer influenciar.",mission:"Se você pudesse ensinar apenas 3 lições de vida para alguém que ama, quais seriam? O que isso revela sobre seus valores?",concept:"Nossos valores mais profundos frequentemente aparecem quando pensamos no que queremos transmitir, não no que queremos ter."},
+      {title:"Valores esquecidos",scenario:"Você percebe que algo importante tem sido negligenciado.",mission:"Olhe para as áreas da sua vida: relacionamentos, saúde, trabalho, criatividade. Onde seus valores estão mais ausentes?",concept:"Clareza de valores também implica honestidade sobre lacunas. Sem julgamento — apenas observação como ponto de partida."},
+      {title:"Meu manifesto pessoal",scenario:"O final da semana convida à síntese.",mission:"Escreva um parágrafo curto que começa com: 'Quero viver de um modo que…' Seja honesto e pessoal.",concept:"Articular valores em palavras aumenta o comprometimento com eles. Um manifesto pessoal é uma âncora nos momentos difíceis."},
+      {title:"Revisão da semana 4",scenario:"Quatro semanas.",mission:"Seus valores mudaram ou ficaram mais claros? O que você descobriu sobre o que realmente importa pra você?",concept:"Valores não são estáticos — amadurecem com a experiência. Clareza de valores é um processo contínuo, não uma conclusão."}
+    ]
+  },
+  { id:5, label:"Semana 5", title:"Mãos à obra", sub:"Ação comprometida",
+    pill:{bg:"#FAECE7",color:"#993C1D"}, processo:"Ação comprometida", cor:"#D85A30",
+    days:[
+      {title:"A menor ação possível",scenario:"Um valor importante está sendo ignorado há dias ou semanas.",mission:"Identifique um valor seu que está em espera. Faça UMA ação pequena hoje — não a perfeita, a possível.",concept:"Ação comprometida não exige perfeição ou condições ideais. Uma ação pequena em direção a um valor é mais poderosa do que nenhuma."},
+      {title:"Quando a emoção bloqueia",scenario:"Você sabe o que precisa fazer — mas a ansiedade paralisa.",mission:"Defina a ação que evita. Faça ela por apenas 5 minutos — mesmo com a ansiedade presente. Depois pare se quiser.",concept:"A ACT propõe agir COM a emoção, não APESAR dela. A emoção pode vir junto — não precisa desaparecer antes."},
+      {title:"Comprometimento público",scenario:"Um objetivo importante fica só na cabeça e nunca sai do papel.",mission:"Compartilhe com alguém de confiança UMA ação que você se compromete a fazer esta semana. Diga em voz alta.",concept:"Comprometimento externo ativa responsabilidade social — um acelerador poderoso para a ação comprometida."},
+      {title:"Obstáculo como dado",scenario:"Algo impediu você de agir conforme planejado.",mission:"Identifique o obstáculo que apareceu. Pergunte: como posso contornar isso? O que posso ajustar — sem abandonar o valor?",concept:"Obstáculos são esperados na ACT. O compromisso é com a direção (valor), não com um caminho rígido."},
+      {title:"Ação e identidade",scenario:"Você quer mudar um comportamento mas não sabe por onde começar.",mission:"Escolha uma ação de hoje que represente quem você quer ser — não o que você quer ter ou evitar. Faça ela.",concept:"Quando agimos a partir de valores, a ação muda nossa identidade — não o contrário. Você se torna quem você age como."},
+      {title:"Flexibilidade na prática",scenario:"O plano não funcionou, mas o valor ainda está lá.",mission:"Encontre uma forma diferente de expressar o mesmo valor hoje. Criatividade é parte da ação comprometida.",concept:"Ação comprometida é flexível na forma, firme no propósito. O caminho muda — a direção permanece."},
+      {title:"Revisão da semana 5",scenario:"Cinco semanas de prática.",mission:"Qual ação desta semana você mais se orgulha? O que ainda bloqueia sua ação comprometida?",concept:"Ação comprometida é um músculo. Cada pequena escolha alinhada a valores o fortalece — mesmo as imperfeitas."}
+    ]
+  },
+  { id:6, label:"Dia 30", title:"Integração total", sub:"Todos os seis processos",
+    pill:{bg:"#E6F1FB",color:"#185FA5"}, processo:"Integração total", cor:"#378ADD",
+    days:[
+      {title:"A jornada completa",scenario:"Trinta dias de prática chegaram ao fim.",mission:"Escreva uma carta para você mesmo: o que você aprendeu sobre flexibilidade psicológica? O que vai levar daqui?",concept:"Flexibilidade psicológica é a capacidade de estar em contato com o presente, aberto à experiência, e agir em direção ao que importa. Você praticou isso por 30 dias. Isso é real."}
+    ]
+  }
+];
+
+const state = {
+  completed: JSON.parse(localStorage.getItem('act30_completed') || '[]'),
+  reflections: JSON.parse(localStorage.getItem('act30_reflections') || '{}'),
+};
+function saveState() {
+  localStorage.setItem('act30_completed', JSON.stringify(state.completed));
+  localStorage.setItem('act30_reflections', JSON.stringify(state.reflections));
+}
+function getDayIndex(wi, di) {
+  let t = 0; for (let i = 0; i < wi; i++) t += weeks[i].days.length; return t + di;
+}
+function getTotalDays() { return weeks.reduce((s,w) => s + w.days.length, 0); }
+
+// ---- NAV ----
+function goPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  document.querySelector('[data-page="' + name + '"]').classList.add('active');
+  if (name === 'perfil') renderPerfil();
+  window.scrollTo(0, 0);
+}
+
+// ---- JOGO ----
+function buildUI() {
+  const container = document.getElementById('weeks-container');
+  container.innerHTML = '';
+  weeks.forEach((week, wi) => {
+    const block = document.createElement('div');
+    block.className = 'week-block';
+    const header = document.createElement('div');
+    header.className = 'week-header';
+    const pill = document.createElement('span');
+    pill.className = 'week-pill';
+    pill.style.background = week.pill.bg;
+    pill.style.color = week.pill.color;
+    pill.textContent = week.label;
+    const info = document.createElement('div');
+    info.innerHTML = `<div class="week-title">${week.title}</div><div class="week-sub">${week.sub}</div>`;
+    header.appendChild(pill); header.appendChild(info); block.appendChild(header);
+    const grid = document.createElement('div');
+    grid.className = 'days-grid';
+    week.days.forEach((day, di) => {
+      const idx = getDayIndex(wi, di);
+      const done = state.completed.includes(idx);
+      const prevDone = idx === 0 || state.completed.includes(idx - 1);
+      const isActive = !done && prevDone;
+      const locked = !done && !prevDone;
+      const btn = document.createElement('button');
+      btn.className = `day-btn week-${week.id}`;
+      if (done) btn.classList.add('completed');
+      else if (isActive) btn.classList.add('active');
+      else if (locked) btn.classList.add('locked');
+      btn.innerHTML = done ? `<span class="check-icon">✓</span><span>${idx+1}</span>` : `<span>${idx+1}</span>`;
+      btn.setAttribute('aria-label', `Dia ${idx+1}: ${day.title}`);
+      if (!locked) btn.addEventListener('click', () => openModal(wi, di, idx));
+      grid.appendChild(btn);
+    });
+    block.appendChild(grid); container.appendChild(block);
+  });
+  updateStats();
+}
+
+function updateStats() {
+  const done = state.completed.length;
+  const total = getTotalDays();
+  const reflCount = Object.keys(state.reflections).filter(k => state.reflections[k] && state.reflections[k].trim()).length;
+  const pts = done * 10 + reflCount * 5;
+  const sorted = [...state.completed].sort((a,b)=>a-b);
+  let streak = 0;
+  if (sorted.length > 0) {
+    streak = 1;
+    for (let i = sorted.length-1; i > 0; i--) {
+      if (sorted[i] === sorted[i-1]+1) streak++; else break;
+    }
+  }
+  ['stat-done','p-stat-done'].forEach(id => { const el = document.getElementById(id); if(el) el.textContent = done; });
+  ['stat-pts','p-stat-pts'].forEach(id => { const el = document.getElementById(id); if(el) el.textContent = pts; });
+  ['stat-streak','p-stat-streak'].forEach(id => { const el = document.getElementById(id); if(el) el.textContent = streak; });
+  const pf = document.getElementById('progress-fill');
+  if (pf) pf.style.width = Math.round((done/total)*100) + '%';
+  const pp = document.getElementById('progress-pct');
+  if (pp) pp.textContent = `${done} / ${total}`;
+  document.getElementById('badge-7').classList.toggle('earned', streak >= 7);
+  document.getElementById('badge-14').classList.toggle('earned', streak >= 14);
+  document.getElementById('badge-30').classList.toggle('earned', done >= 30);
+}
+
+// ---- MODAL ----
+let currentIdx = null;
+function openModal(wi, di, idx) {
+  currentIdx = idx;
+  const week = weeks[wi]; const day = week.days[di];
+  const done = state.completed.includes(idx);
+  document.getElementById('modal-tag').textContent = week.sub;
+  document.getElementById('modal-tag').style.background = week.pill.bg;
+  document.getElementById('modal-tag').style.color = week.pill.color;
+  document.getElementById('modal-day-num').textContent = `Dia ${idx+1} · ${week.title}`;
+  document.getElementById('modal-title').textContent = day.title;
+  document.getElementById('modal-scenario').textContent = day.scenario;
+  document.getElementById('modal-mission').textContent = day.mission;
+  document.getElementById('modal-concept').textContent = day.concept;
+  document.getElementById('modal-reflect').value = state.reflections[idx] || '';
+  const btn = document.getElementById('btn-complete');
+  if (done) { btn.textContent = 'Já concluído ✓'; btn.disabled = true; }
+  else { btn.textContent = 'Concluir dia ✓'; btn.disabled = false; }
+  document.getElementById('modal-bg').classList.add('visible');
+}
+function closeModal() {
+  if (currentIdx !== null) {
+    const val = document.getElementById('modal-reflect').value;
+    if (val.trim()) { state.reflections[currentIdx] = val; saveState(); }
+  }
+  document.getElementById('modal-bg').classList.remove('visible');
+}
+document.getElementById('btn-close').addEventListener('click', closeModal);
+document.getElementById('modal-bg').addEventListener('click', e => { if (e.target === document.getElementById('modal-bg')) closeModal(); });
+document.getElementById('btn-complete').addEventListener('click', () => {
+  if (currentIdx === null) return;
+  const val = document.getElementById('modal-reflect').value;
+  if (val.trim()) state.reflections[currentIdx] = val;
+  if (!state.completed.includes(currentIdx)) { state.completed.push(currentIdx); state.completed.sort((a,b)=>a-b); }
+  saveState();
+  document.getElementById('modal-bg').classList.remove('visible');
+  buildUI();
+});
+
+// ---- PERFIL / RADAR ----
+function getWeekProgress() {
+  return weeks.map((week, wi) => {
+    const total = week.days.length;
+    const done = week.days.filter((_, di) => state.completed.includes(getDayIndex(wi, di))).length;
+    return { nome: week.processo, cor: week.cor, pill: week.pill, pct: total > 0 ? Math.round((done/total)*100) : 0, done, total };
+  });
+}
+
+function drawRadar(data) {
+  const canvas = document.getElementById('radarChart');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const cx = W/2, cy = H/2;
+  const R = Math.min(W,H)/2 - 36;
+  const n = data.length;
+  ctx.clearRect(0,0,W,H);
+
+  // grid circles
+  for (let r = 1; r <= 4; r++) {
+    ctx.beginPath();
+    for (let i = 0; i < n; i++) {
+      const angle = (Math.PI*2*i/n) - Math.PI/2;
+      const x = cx + Math.cos(angle)*(R*r/4);
+      const y = cy + Math.sin(angle)*(R*r/4);
+      i===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+    }
+    ctx.closePath();
+    ctx.strokeStyle = 'rgba(0,0,0,0.07)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+    if (r===4) { ctx.fillStyle='rgba(0,0,0,0.03)'; ctx.fill(); }
+  }
+
+  // spokes
+  for (let i = 0; i < n; i++) {
+    const angle = (Math.PI*2*i/n) - Math.PI/2;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(cx+Math.cos(angle)*R, cy+Math.sin(angle)*R);
+    ctx.strokeStyle='rgba(0,0,0,0.08)'; ctx.lineWidth=1; ctx.stroke();
+  }
+
+  // data polygon
+  ctx.beginPath();
+  data.forEach((d,i) => {
+    const angle = (Math.PI*2*i/n) - Math.PI/2;
+    const r = R * (d.pct/100);
+    const x = cx+Math.cos(angle)*r, y = cy+Math.sin(angle)*r;
+    i===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+  });
+  ctx.closePath();
+  ctx.fillStyle = 'rgba(29,158,117,0.15)';
+  ctx.fill();
+  ctx.strokeStyle = '#1D9E75';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  // dots
+  data.forEach((d,i) => {
+    const angle = (Math.PI*2*i/n) - Math.PI/2;
+    const r = R*(d.pct/100);
+    const x = cx+Math.cos(angle)*r, y = cy+Math.sin(angle)*r;
+    ctx.beginPath();
+    ctx.arc(x,y,5,0,Math.PI*2);
+    ctx.fillStyle = d.cor; ctx.fill();
+    ctx.strokeStyle='white'; ctx.lineWidth=2; ctx.stroke();
+  });
+
+  // labels
+  ctx.font = '11px DM Sans, sans-serif';
+  ctx.textAlign = 'center';
+  data.forEach((d,i) => {
+    const angle = (Math.PI*2*i/n) - Math.PI/2;
+    const lx = cx+Math.cos(angle)*(R+22), ly = cy+Math.sin(angle)*(R+22);
+    const parts = d.nome.split(' ');
+    ctx.fillStyle = '#6b6b66';
+    if (parts.length <= 2) {
+      ctx.fillText(d.nome, lx, ly + (Math.sin(angle)>0.3?4:-4));
+    } else {
+      ctx.fillText(parts[0]+' '+parts[1], lx, ly-6);
+      ctx.fillText(parts.slice(2).join(' '), lx, ly+8);
+    }
+  });
+}
+
+function renderPerfil() {
+  const data = getWeekProgress();
+  updateStats();
+  drawRadar(data);
+
+  // processo cards
+  const grid = document.getElementById('processos-grid');
+  grid.innerHTML = '';
+  data.forEach(d => {
+    const card = document.createElement('div');
+    card.className = 'processo-card';
+    card.innerHTML = `
+      <div class="p-header">
+        <span class="p-name">${d.nome}</span>
+        <span class="p-pct" style="color:${d.cor}">${d.pct}%</span>
+      </div>
+      <div class="p-bar">
+        <div class="p-fill" style="width:${d.pct}%;background:${d.cor}"></div>
+      </div>
+      <div class="p-sub">${d.done} de ${d.total} dias</div>`;
+    grid.appendChild(card);
+  });
+
+  // insights
+  const insights = [];
+  const sorted = [...data].sort((a,b)=>b.pct-a.pct);
+  const melhor = sorted[0], menor = sorted[sorted.length-1];
+  const totalDone = state.completed.length;
+
+  if (totalDone === 0) {
+    insights.push({ cor:'#1D9E75', text:'Você ainda não completou nenhum dia. Comece pelo Dia 1 — a missão é pequena e leva menos de 5 minutos.' });
+  } else {
+    if (melhor.pct > 0) insights.push({ cor: melhor.cor, text: `Seu processo mais praticado foi <strong>${melhor.nome}</strong> (${melhor.pct}% concluído). Continue explorando esse terreno.` });
+    if (menor.pct < melhor.pct) insights.push({ cor: menor.cor, text: `<strong>${menor.nome}</strong> ainda tem espaço para crescer (${menor.pct}%). Cada dia nessa área vai ampliar sua flexibilidade.` });
+    const reflCount = Object.keys(state.reflections).filter(k=>state.reflections[k]&&state.reflections[k].trim()).length;
+    if (reflCount > 0) insights.push({ cor:'#7F77DD', text: `Você registrou reflexões em <strong>${reflCount} dia(s)</strong>. Isso aprofunda muito o aprendizado — continue escrevendo.` });
+    if (totalDone >= 7) insights.push({ cor:'#EF9F27', text:'Chegou a uma semana completa! A pesquisa mostra que 7 dias de prática já criam mudanças mensuráveis na flexibilidade psicológica.' });
+    if (totalDone >= 30) insights.push({ cor:'#639922', text:'Parabéns — você completou a jornada de 30 dias! Isso é uma conquista real. A ACT agora faz parte da sua vida.' });
+  }
+
+  const list = document.getElementById('insights-list');
+  list.innerHTML = insights.map(ins =>
+    `<div class="insight-item">
+      <div class="insight-dot" style="background:${ins.cor}"></div>
+      <div class="insight-text">${ins.text}</div>
+    </div>`
+  ).join('');
+}
+
+// ---- WELCOME ----
+const welcomed = localStorage.getItem('act30_welcomed');
+if (welcomed) document.getElementById('welcome-screen').classList.add('hidden');
+document.getElementById('btn-start').addEventListener('click', () => {
+  localStorage.setItem('act30_welcomed','1');
+  const ws = document.getElementById('welcome-screen');
+  ws.classList.add('hiding');
+  setTimeout(() => ws.classList.add('hidden'), 520);
+});
+
+buildUI();
+</script>
+</body>
+</html>
